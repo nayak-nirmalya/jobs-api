@@ -1,5 +1,5 @@
 const Job = require("../models/Job");
-const { BadRequestError, UnauthenticatedError } = require("../errors");
+const { BadRequestError, NotFoundError } = require("../errors");
 
 const { StatusCodes } = require("http-status-codes");
 
@@ -8,7 +8,19 @@ const getAllJobs = async (req, res) => {
   res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
 const getJob = async (req, res) => {
-  res.send("Get Job!");
+  const {
+    user: { userId },
+    params: { id: jobId },
+  } = req;
+
+  const job = await Job.findOne({
+    _id: jobId,
+    createdBy: userId,
+  });
+
+  if (!job) throw new NotFoundError(`No Job with Job ID: ${jobId}`);
+
+  res.status(StatusCodes.OK).json({ job });
 };
 const createJob = async (req, res) => {
   req.body.createdBy = req.user.userId;
