@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Provide a Password!"],
     minlength: 4,
-    select: false,
+    // select: false,
   },
 });
 
@@ -39,6 +39,10 @@ UserSchema.methods.createJWT = function () {
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_LIFETIME }
   );
+};
+
+UserSchema.methods.comparePassword = async function (logInPassword) {
+  return await bcrypt.compare(logInPassword, this.password);
 };
 
 module.exports = mongoose.model("User", UserSchema);
