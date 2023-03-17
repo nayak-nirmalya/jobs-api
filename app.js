@@ -62,8 +62,9 @@ const start = async () => {
       console.log(`Server is Listening on Port ${port}...`)
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 start();
+module.exports = app;
