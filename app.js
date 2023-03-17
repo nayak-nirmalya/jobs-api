@@ -66,5 +66,6 @@ const start = async () => {
   }
 };
 
-// start();
-module.exports = start;
+start();
+// module.exports = start;
+// module.exports = app;
