@@ -4,7 +4,8 @@ const { BadRequestError, UnauthenticatedError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllJobs = async (req, res) => {
-  res.send("Get All Jobs!");
+  const jobs = await Job.find({ createdBy: req.user.userId }).sort("createdAt");
+  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
 const getJob = async (req, res) => {
   res.send("Get Job!");
