@@ -23,6 +23,9 @@ const xss = require("xss-clean");
 const helmet = require("helmet");
 const rateLimiter = require("express-rate-limit");
 
+// dummy route to check if server working or not
+app.get("/", (req, res) => res.send("Hello World!"));
+
 // middelware to limit requests per user
 app.set("trust proxy", 1);
 app.use(
